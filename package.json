@@ -16,7 +16,11 @@
     "nuxt": "^2.14.12",
     "nuxt-buefy": "^0.4.4",
     "sass-loader": "^10.1.1",
-    "sass-resources-loader": "^2.1.1"
+    "sass-resources-loader": "^2.1.1",
+    "lodash": "^4.17.15",
+    "vue-owl-carousel": "^2.0.3",
+    "vue-scrollto": "^2.17.1",
+    "vue-template-compiler": "^2.6.10"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",

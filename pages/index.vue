@@ -1,44 +1,67 @@
 <template>
-  <div class="container">
-    <div>ddddddddd</div>
-  </div>
+  <main>
+    <Herobanner />
+    <div class="home-layout">
+      <div class="left-side">
+        <Article v-for="item in articles" :item="item" :key="item.id" />
+        <Article v-for="item in news" :item="item" :key="item.id" />
+      </div>
+      <div class="right-side">
+        <Rankbox :items="rankList" />
+        <Keywordbox />
+        <Emailbox />
+      </div>
+    </div>
+  </main>
 </template>
+<script>
+import Herobanner from "~/components/Herobanner";
+import Article from "@/components/card/Article";
+import articleList from "../assets/data/article.json";
+import newsList from "../assets/data/news.json";
+import Rankbox from "@/components/Rankbox";
+import Keywordbox from "@/components/Keywordbox";
+import Emailbox from "@/components/Emailbox";
 
-<script lang="ts">
-import Vue from "vue";
+import _ from "lodash";
 
-export default Vue.extend({});
+export default {
+  name: "HomePage",
+  components: {
+    Herobanner,
+    Article,
+    Rankbox,
+    Keywordbox,
+    Emailbox
+  },
+  computed: {
+    articles() {
+      return articleList.list;
+    },
+    news() {
+      return newsList.list;
+    },
+    rankList() {
+      let array = _.concat(this.articles, this.news);
+      array = _.sortBy(array, ["viewCount"])
+        .reverse()
+        .splice(0, 5);
+      return _.map(array, "title");
+    }
+  }
+};
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+<style scoped>
+.home-layout {
+  max-width: 1180px;
+  margin: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
-
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.left-side {
+  max-width: 840px;
 }
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.right-side {
+  margin-left: 60px;
+  max-width: 250px;
 }
 </style>
